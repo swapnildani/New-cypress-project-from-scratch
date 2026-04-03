@@ -1,0 +1,1 @@
+npx cypress open --e2e --browser chrome
