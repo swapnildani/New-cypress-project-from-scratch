@@ -16,4 +16,7 @@ ABtesting:{
     Auth:{
         auth:':nth-child(3) > a',
     },
+    Dropdown:{
+        option:'#dropdown'
+    }
 };

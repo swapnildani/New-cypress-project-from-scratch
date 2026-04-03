@@ -2,7 +2,7 @@ const pageobj = require('../Page-Objects/Pageobjects.page');
 const testdata = require('../../fixtures/testdata.json');
 
 class Eventfunc {
-    
+
     AddDeletefunc() {
         cy.visit('/');
         cy.get(pageobj.AddRemove.url).click()
@@ -45,6 +45,17 @@ class Eventfunc {
         });
         cy.get('#hot-spot').rightclick() // Button that triggers alert
         cy.get('@alertStub').should('have.been.calledWith', 'You selected a context menu');
+    }
+    visit() {
+        cy.visit('/dynamic_content');
+    }
+
+    getContentRows() {
+        return cy.get('.large-10.columns.large-centered .row');
+    }
+
+    getImages() {
+        return cy.get('img');
     }
 
 }
