@@ -60,7 +60,6 @@ describe('the-internet.herokuapp test ', () => {
     it.only('TestCase7: Context menu pop up message', () => {
         cy.visit('/context_menu').wait(2000)
         eventFunc.Contextpopup_Alert();  
-
     })
 
 
