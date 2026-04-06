@@ -23,3 +23,21 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('clickStartButton', () => {
+  cy.get('#start button')
+    .should('be.visible')
+    .click()
+})
+
+Cypress.Commands.add('uploadFile', ({ fileInput, submitButton, fileName, url = '/upload', statusCode = 200 }) => {
+    cy.intercept('POST', url).as('fileUpload')
+    cy.get(fileInput)
+      .selectFile(`cypress/fixtures/${fileName}`, {
+        force: true
+      })
+    cy.get(submitButton).click()
+    cy.wait('@fileUpload').its('response.statusCode').should('eq', statusCode)
+
+  }
+)

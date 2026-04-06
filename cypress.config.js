@@ -11,6 +11,8 @@ module.exports = defineConfig({
   defaultCommandTimeout: 80000,
   requestTimeout: 20000,
   watchForFileChanges: false,
+  //viewportWidth: 1920,
+  //viewportHeight: 1080,
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here

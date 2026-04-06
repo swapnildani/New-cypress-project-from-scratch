@@ -4,8 +4,8 @@ const testdata = require('../../fixtures/testdata.json')
 
 describe('the-internet.herokuapp test ', () => {
   /* beforeEach(() => {
-
-  cy.visit('/')
+      
+  //cy.visit('/')
 
 })*/
 
@@ -69,11 +69,101 @@ describe('the-internet.herokuapp test ', () => {
 
   })
 
-  it.only('Validate dynamic content structure', () => {
+  it('TestCase9: Validate dynamic content structure', () => {
     eventFunc.visit();
     eventFunc.getContentRows().should('have.length', 3);
     eventFunc.getImages().should('be.visible');
   });
+
+  it('TestCase10: Verify Dynamic Controls', () => {
+    cy.visit('/dynamic_controls')
+    cy.clearAllCookies()
+    cy.get(pageobj.DynamicControls.Heading).should('have.text', 'Dynamic Controls')
+    cy.get(pageobj.DynamicControls.Removebtn).should('be.visible')
+    cy.get(pageobj.DynamicControls.Checkboxinpt).click();
+    cy.get(pageobj.DynamicControls.Removebtn).click();
+    cy.get(pageobj.DynamicControls.Loading).should('be.visible')
+    cy.get(pageobj.DynamicControls.Loadingimg).should('be.visible')
+    cy.get(pageobj.DynamicControls.Messgae).contains("It's gone!")
+    cy.get(pageobj.DynamicControls.Addbtn).click();
+    cy.get(pageobj.DynamicControls.Loading).contains('Wait for it...')
+    cy.get(pageobj.DynamicControls.Messgae).contains("It's back!")
+    cy.get(pageobj.DynamicControls.Textfield).should('be.disabled')
+    cy.get(pageobj.DynamicControls.Enablebtn).should('be.visible').click()
+    cy.get(pageobj.DynamicControls.Loading).contains('Wait for it...')
+    cy.get(pageobj.DynamicControls.Messgae).contains("It's enabled!")
+    cy.get(pageobj.DynamicControls.Textfield).type('Swapnil test automation')
+    cy.get(pageobj.DynamicControls.Disablebtn).should('be.visible').click().wait(3000)
+    cy.get(pageobj.DynamicControls.Textfield).should('be.disabled')
+    cy.get(pageobj.DynamicControls.Messgae).contains("It's disabled!")
+  })
+
+  it('TestCase11: Validate Dynamic loading', () => {
+    cy.visit('/dynamic_loading')
+    cy.get('[href="/dynamic_loading/1"]').click()
+    cy.get('button').click()
+    cy.get('#loading').should('be.visible')
+    cy.get('#finish > h4').contains('Hello World!')
+    cy.go('back').wait(2000)
+    cy.get('[href="/dynamic_loading/2"]').click()
+    cy.get('button').click()
+    cy.get('#loading').should('be.visible')
+    cy.get('#finish > h4').contains('Hello World!')
+    cy.go('back').wait(2000)
+    //Using custom commands
+    cy.visit('/dynamic_loading/1')
+    cy.clickStartButton()
+    cy.get('#finish').should('be.visible').and('contain', 'Hello World!')
+  });
+
+  it.skip('TestCase12: Verify exit intent', () => {
+    cy.visit('/exit_intent')
+    cy.get('body').trigger('mouseover')
+    cy.get('body')
+      .trigger('mousemove', { clientX: 4000, clientY: 10 })
+      .trigger('mouseout', {
+        clientX: 4000,
+        clientY: -1
+      })
+
+    cy.get('#ouibounce-modal')
+      .should('be.visible')
+
+
+  })
+
+  it('TestCase13: Verify File Download', () => {
+    cy.visit('/download')
+    cy.get(pageobj.Filedownloader.heading).should('contain.text', 'File Downloader')
+    cy.get(pageobj.Filedownloader.Downloadfile1).click()
+    cy.get(pageobj.Filedownloader.Downloadfile2).click()
+  })
+
+  it('should upload file using input field', () => {
+    cy.visit('/upload')
+    // file should be inside cypress/fixtures
+    eventFunc.Fileupload()
+    cy.go('back')
+    eventFunc.FileupladDropZone()
+
+  })
+
+  it('TestCase14: Verify backend endpoint API response', () => {
+    cy.visit('/upload')
+    cy.intercept('POST', '/upload').as('fileUpload')
+    cy.get(pageobj.Fileupload.File_upload).selectFile('cypress/fixtures/invoice.txt', { force: true })
+    cy.get(pageobj.Fileupload.File_submit).click()
+    cy.wait('@fileUpload').its('response.statusCode').should('eq', 200)
+  })
+
+  it('TestCase15: Verify Fileupload using custom commands', () => {
+  cy.visit('/upload')
+  cy.uploadFile({
+  fileInput: pageobj.Fileupload.File_upload,
+  submitButton: pageobj.Fileupload.File_submit,
+  fileName: 'invoice.txt'
+})
+  })
 
 })
 

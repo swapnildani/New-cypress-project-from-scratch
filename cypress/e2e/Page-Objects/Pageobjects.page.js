@@ -18,5 +18,26 @@ ABtesting:{
     },
     Dropdown:{
         option:'#dropdown'
+    },
+    DynamicControls:{
+        Heading:'.example > :nth-child(1)',
+        Removebtn: '#checkbox-example > button',
+        Addbtn: '#checkbox-example > button',
+        Enablebtn: '#input-example > button',
+        Disablebtn: '#input-example > button',
+        Checkboxinpt: '#checkbox > input',
+        Loading: '#loading',
+        Messgae: '#message',
+        Loadingimg: '#loading > img',
+        Textfield: '#input-example > input',
+    },
+    Filedownloader: {
+        Downloadfile1: '#content > div > a:nth-child(2)',
+        Downloadfile2: '#content > div > a:nth-child(4)',
+        heading: 'h3',
+    },
+    Fileupload: {
+        File_upload: '#file-upload',
+        File_submit: '#file-submit',
     }
 };
