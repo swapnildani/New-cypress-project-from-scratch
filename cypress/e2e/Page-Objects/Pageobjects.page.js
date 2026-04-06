@@ -39,5 +39,11 @@ ABtesting:{
     Fileupload: {
         File_upload: '#file-upload',
         File_submit: '#file-submit',
+    },
+    FloatingMenu: {
+        Home: ':nth-child(1) > a',
+        News: ':nth-child(2) > a',
+        Contact: ':nth-child(3) > a',
+        About: ':nth-child(4) > a',
     }
 };

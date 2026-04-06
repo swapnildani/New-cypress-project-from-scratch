@@ -165,6 +165,15 @@ describe('the-internet.herokuapp test ', () => {
 })
   })
 
+  it.only('TestCase16: Verify floating menu', ()=>{
+   cy.visit('/floating_menu')
+   cy.scrollTo('bottom', { duration: 2000 });
+   cy.get(pageobj.FloatingMenu.Home).invoke('show').should('be.visible');
+   cy.get(pageobj.FloatingMenu.News).invoke('show').should('be.visible');
+   cy.get(pageobj.FloatingMenu.Contact).invoke('show').should('be.visible');
+   cy.get(pageobj.FloatingMenu.About).invoke('show').should('be.visible');
+  })
+
 })
 
 describe.skip('Challenging DOM Full Test', () => {
